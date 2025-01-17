@@ -3,10 +3,12 @@
 import { useAgGridTheme } from "@/hooks/use-ag-grid-theme";
 import { AllCommunityModule, ColDef, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
+import { useTheme } from "next-themes";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 export default function SimpleAgGrid() {
+  const { theme: themeMode } = useTheme();
   const theme = useAgGridTheme();
 
   const rowData = [
@@ -23,8 +25,13 @@ export default function SimpleAgGrid() {
   ];
 
   return (
-    <div className="h-[90vh] w-[1024px]">
-      <AgGridReact theme={theme} rowData={rowData} columnDefs={colDefs} />
+    <div>
+      <div className="p-4 mt-10 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md mb-4">
+        <span>Grid is in {themeMode} mode</span>
+      </div>
+      <div className="h-56 w-[900px]">
+        <AgGridReact theme={theme} rowData={rowData} columnDefs={colDefs} />
+      </div>
     </div>
   );
 }

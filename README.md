@@ -17,3 +17,7 @@ bun add ag-grid-react ag-grid-community
 # Add Next Themes
 bun add next-themes
 ```
+
+## TODO
+
+- Hydration Error: + light {" mode"}

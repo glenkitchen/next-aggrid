@@ -1,3 +1,4 @@
+import { useMounted } from "@/hooks/use-mounted";
 import {
   colorSchemeDark,
   colorSchemeLight,
@@ -7,9 +8,12 @@ import { useTheme } from "next-themes";
 
 // Simple hook to integrate AG Grid theme with NextJS theme
 export const useAgGridTheme = () => {
+  const isMounted = useMounted();
   const { theme } = useTheme();
 
-  return theme === "dark"
-    ? themeQuartz.withPart(colorSchemeDark)
+  return isMounted
+    ? theme === "dark"
+      ? themeQuartz.withPart(colorSchemeDark)
+      : themeQuartz.withPart(colorSchemeLight)
     : themeQuartz.withPart(colorSchemeLight);
 };

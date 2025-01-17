@@ -1,6 +1,7 @@
 "use client";
 
 import { useAgGridTheme } from "@/hooks/use-ag-grid-theme";
+import { formatAgGridCurrency, formatAgGridDate } from "@/utils/format-ag-grid";
 import { AllCommunityModule, ColDef, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useTheme } from "next-themes";
@@ -12,25 +13,53 @@ export default function SimpleAgGrid() {
   const theme = useAgGridTheme();
 
   const rowData = [
-    { make: "Tesla", model: "Model Y", price: 64950, electric: true },
-    { make: "Ford", model: "F-Series", price: 33850, electric: false },
-    { make: "Toyota", model: "Corolla", price: 29600, electric: false },
+    {
+      make: "Tesla",
+      model: "Model Y",
+      price: 64950,
+      electric: true,
+      date: new Date(),
+    },
+    {
+      make: "Ford",
+      model: "F-Series",
+      price: 33850,
+      electric: false,
+      date: new Date(),
+    },
+    {
+      make: "Toyota",
+      model: "Corolla",
+      price: 29600,
+      electric: false,
+      date: new Date(),
+    },
   ];
 
   const colDefs: ColDef[] = [
     { field: "make" },
     { field: "model" },
-    { field: "price" },
+    { field: "price", valueFormatter: formatAgGridCurrency },
     { field: "electric" },
+    { field: "date", valueFormatter: formatAgGridDate },
   ];
 
+  const defaultColDef: ColDef = {
+    filter: true,
+  };
+
   return (
-    <div>
-      <div className="p-4 mt-10 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md mb-4">
-        <span>Grid is in {themeMode} mode</span>
+    <div className="p-4">
+      <div className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-md mb-4">
+        {/*  <span>Grid is in {themeMode} mode</span> */}
       </div>
-      <div className="h-56 w-[900px]">
-        <AgGridReact theme={theme} rowData={rowData} columnDefs={colDefs} />
+      <div className="h-56 w-[1200px]">
+        <AgGridReact
+          /*  theme={theme} */
+          rowData={rowData}
+          columnDefs={colDefs}
+          defaultColDef={defaultColDef}
+        />
       </div>
     </div>
   );
